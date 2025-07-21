@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=ctb-cdufour
+#SBATCH --time 2:0
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=1G
+#SBATCH --array=1995
+
+module load python/3.10
+module load netcdf
+module load mpi4py
+#export PYTHONPATH=$PYTHONPATH:
+source /home/nplanat/eddytools2/bin/activate
+
+for i in {0..0..1}
+do
+    echo "Starting depth  ${i}"
+    python /home/nplanat/scripts/Eddies/VF_3/s_detect.py ${i} $SLURM_ARRAY_TASK_ID
+done
